@@ -1,12 +1,61 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { useRef } from 'react';
+import Navbar from '@/components/Navbar';
+import Hero from '@/components/Hero';
+import Features from '@/components/Features';
+import HowItWorks from '@/components/HowItWorks';
+import Footer from '@/components/Footer';
+import ChatWidget from '@/components/ChatWidget';
 
 const Index = () => {
+  const chatRef = useRef<{ openChat: () => void }>({
+    openChat: () => console.log('Chat not initialized yet')
+  });
+
+  const handleChatClick = () => {
+    if (chatRef.current) {
+      chatRef.current.openChat();
+    }
+  };
+
+  // Script for smooth scrolling
+  const setupSmoothScroll = () => {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        if (this.getAttribute('href') !== '#' && this.getAttribute('href') !== '#chat') {
+          e.preventDefault();
+          const targetId = this.getAttribute('href');
+          if (targetId) {
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+              targetElement.scrollIntoView({
+                behavior: 'smooth'
+              });
+            }
+          }
+        }
+      });
+    });
+  };
+
+  // Set up smooth scrolling after component mount
+  setTimeout(setupSmoothScroll, 500);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen flex flex-col">
+      <header className="bg-gradient shadow-md">
+        <Navbar />
+        <Hero onChatClick={handleChatClick} />
+      </header>
+
+      <main>
+        <Features />
+        <HowItWorks />
+      </main>
+
+      <Footer />
+      
+      <ChatWidget chatRef={chatRef} />
     </div>
   );
 };
