@@ -1,5 +1,5 @@
 
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Features from '@/components/Features';
@@ -39,7 +39,12 @@ const Index = () => {
   };
 
   // Set up smooth scrolling after component mount
-  setTimeout(setupSmoothScroll, 500);
+  useEffect(() => {
+    setupSmoothScroll();
+    
+    // Set page title to AllocAI
+    document.title = "AllocAI | Smart Task Management";
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col">
