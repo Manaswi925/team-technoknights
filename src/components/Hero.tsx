@@ -19,6 +19,7 @@ const Hero = ({ onChatClick }: HeroProps) => {
       <Button 
         onClick={onChatClick}
         className="bg-accent hover:bg-accent/90 text-white font-medium px-8 py-6 rounded-full text-lg hero-cta shadow-lg flex items-center gap-2 transform transition-all hover:scale-105"
+        aria-label="Open chat with AI assistant"
       >
         Chat with AI Assistant <ArrowRight className="h-5 w-5 ml-1" />
       </Button>

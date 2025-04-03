@@ -39,53 +39,46 @@ const ChatWidget = ({ chatRef }: ChatWidgetProps) => {
     injectScript.src = 'https://cdn.botpress.cloud/webchat/v2.3/inject.js';
     document.body.appendChild(injectScript);
 
-    const botpressScript = document.createElement('script');
-    botpressScript.src = 'https://files.bpcontent.cloud/2025/04/03/13/20250403133953-P8PDZ7L2.js';
-    document.body.appendChild(botpressScript);
-
-    // Initialize Botpress webchat after scripts are loaded
     injectScript.onload = () => {
-      if (window.botpressWebChat && !initialized.current) {
-        initialized.current = true;
-        
-        window.botpressWebChat.init({
-          "botId": "e7229211-adb4-4d48-be14-57a9614ba51e",
-          "hostUrl": "https://cdn.botpress.cloud/webchat",
-          "messagingUrl": "https://messaging.botpress.cloud",
-          "clientId": "your-client-id",
-          "webhookId": "your-webhook-id",
-          "botName": "AllocAI",
-          "avatarUrl": "https://cdn-icons-png.flaticon.com/512/4712/4712035.png",
-          "stylesheet": "https://webchat-styler-css.botpress.app/prod/code/62a3e0d7-5f9e-4a4e-8922-442c68c4d7/v65214/style.css",
-          "lazySocket": true,
-          "themeName": "prism",
-          "frontendVersion": "v2",
-          "showPoweredBy": false,
-          "enableConversationDeletion": true
-        });
-
-        // Expose the openChat method
-        if (chatRef.current) {
-          chatRef.current.openChat = () => {
-            const webchatElement = document.getElementById('webchat');
-            if (webchatElement) {
-              webchatElement.style.display = 'block';
-            }
-            window.botpressWebChat.sendEvent({ type: 'show' });
-          };
-        }
-        
-        // Configure chat link to open chat
-        const chatLink = document.getElementById('chat-link');
-        if (chatLink) {
-          chatLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (chatRef.current) {
-              chatRef.current.openChat();
-            }
+      const botpressScript = document.createElement('script');
+      botpressScript.src = 'https://files.bpcontent.cloud/2025/04/03/13/20250403133953-P8PDZ7L2.js';
+      document.body.appendChild(botpressScript);
+      
+      botpressScript.onload = () => {
+        if (window.botpressWebChat && !initialized.current) {
+          initialized.current = true;
+          
+          window.botpressWebChat.init({
+            "botId": "e7229211-adb4-4d48-be14-57a9614ba51e",
+            "hostUrl": "https://cdn.botpress.cloud/webchat",
+            "messagingUrl": "https://messaging.botpress.cloud",
+            "clientId": "your-client-id",
+            "webhookId": "your-webhook-id",
+            "botName": "AllocAI",
+            "avatarUrl": "https://cdn-icons-png.flaticon.com/512/4712/4712035.png",
+            "stylesheet": "https://webchat-styler-css.botpress.app/prod/code/62a3e0d7-5f9e-4a4e-8922-442c68c4d7/v65214/style.css",
+            "lazySocket": true,
+            "themeName": "prism",
+            "frontendVersion": "v2",
+            "showPoweredBy": false,
+            "enableConversationDeletion": true
           });
+
+          // Define the openChat function
+          if (chatRef.current) {
+            chatRef.current.openChat = () => {
+              console.log('Opening chat window');
+              const webchatElement = document.getElementById('webchat');
+              if (webchatElement) {
+                webchatElement.style.display = 'block';
+              }
+              if (window.botpressWebChat) {
+                window.botpressWebChat.sendEvent({ type: 'show' });
+              }
+            };
+          }
         }
-      }
+      };
     };
 
     return () => {
@@ -94,8 +87,10 @@ const ChatWidget = ({ chatRef }: ChatWidgetProps) => {
       if (injectScript.parentNode) {
         document.body.removeChild(injectScript);
       }
-      if (botpressScript.parentNode) {
-        document.body.removeChild(botpressScript);
+      
+      const botpressScript = document.querySelector('script[src="https://files.bpcontent.cloud/2025/04/03/13/20250403133953-P8PDZ7L2.js"]');
+      if (botpressScript && botpressScript.parentNode) {
+        botpressScript.parentNode.removeChild(botpressScript);
       }
     };
   }, [chatRef]);
