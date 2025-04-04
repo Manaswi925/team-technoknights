@@ -1,8 +1,8 @@
-# Welcome to your Lovable project
+# Welcome to your AllocAI project
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/06affcfa-0526-400e-8443-cb9384607e67
+**URL**: [https://lovable.dev/projects/06affcfa-0526-400e-8443-cb9384607e67](https://alloc-ai-assist.lovable.app/)
 
 ## How can I edit this code?
 
@@ -10,7 +10,7 @@ There are several ways of editing your application.
 
 **Use Lovable**
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/06affcfa-0526-400e-8443-cb9384607e67) and start prompting.
+Simply visit the [Project](https://lovable.dev/projects/06affcfa-0526-400e-8443-cb9384607e67) and start prompting.
 
 Changes made via Lovable will be committed automatically to this repo.
 
